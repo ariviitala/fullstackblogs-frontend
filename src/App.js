@@ -2,6 +2,20 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './App.css'
+
+const Notification = ({message}) => {
+
+  if (message === null) {
+      return null
+  }
+
+  return (
+      <div className={message.type}>
+          {message.text}
+      </div>
+  )
+}
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,6 +25,7 @@ const App = () => {
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
+  const [notification, setNotification] = useState(null)
   
 
   useEffect(() => {
@@ -29,6 +44,13 @@ const App = () => {
     setUser(null)
   }
 
+  const displayMessage = (type, text, duration=5000) => {
+    setNotification({text: text, type: type})
+        setTimeout(() => {
+            setNotification(null)
+        }, duration)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -44,10 +66,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      //setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        //setErrorMessage(null)
-      }, 5000)
+      displayMessage('error', 'Invalid username or password')
     }
   }
 
@@ -60,9 +79,11 @@ const App = () => {
         url: newBlogUrl
       }, user)
 
+      displayMessage('success', `Added blog ${newBlogTitle} by ${newBlogAuthor}`)
       setNewBlogAuthor('')
       setNewBlogTitle('')
       setNewBlogUrl('')
+      
     } catch(error) {
       console.log('Pieleen meni')
     }
@@ -71,6 +92,7 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
+        <Notification message={notification}/>
         username
           <input
           type="text"
@@ -100,6 +122,7 @@ const App = () => {
       return (
         <div>
         <h1>Blogs</h1>
+        <Notification message={notification}/>
         <div>{user.name} logged in</div>
         <form onSubmit={handleLogout}>
         <button type='submit'>Log Out</button>
