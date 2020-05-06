@@ -8,16 +8,16 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 
 
-const Notification = ({message}) => {
+const Notification = ({ message }) => {
 
   if (message === null) {
-      return null
+    return null
   }
 
   return (
-      <div className={message.type}>
-          {message.text}
-      </div>
+    <div className={message.type}>
+      {message.text}
+    </div>
   )
 }
 
@@ -29,12 +29,11 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    ) 
+    )
   }, [])
 
   useEffect(() => {
     setUser(JSON.parse(window.localStorage.getItem('loggedBlogger')))
-    
   }, [])
 
   const handleLogout = (event) => {
@@ -44,10 +43,10 @@ const App = () => {
   }
 
   const displayMessage = (type, text, duration=5000) => {
-    setNotification({text: text, type: type})
-        setTimeout(() => {
-            setNotification(null)
-        }, duration)
+    setNotification({ text: text, type: type })
+    setTimeout(() => {
+      setNotification(null)
+    }, duration)
   }
 
   const handleLogin = async (creds) => {
@@ -69,7 +68,6 @@ const App = () => {
       const addedBlog = await blogService.postNewBlog(blog, user)
       setBlogs(blogs.concat(addedBlog))
       displayMessage('success', `Added blog ${blog.title} by ${blog.author}`)
-      
     } catch(error) {
       displayMessage('error', 'Error occured while adding a blog')
       console.log('Pieleen meni')
@@ -98,44 +96,41 @@ const App = () => {
 
   const loginForm = () => {
 
-      if (!user){
-        return (
+    if (!user){
+      return (
         <Togglable buttonLabel='Log in'>
-        <LoginForm handleLogin={handleLogin}/>
+          <LoginForm handleLogin={handleLogin}/>
         </Togglable> )
-      } else {
-        return (
+    } else {
+      return (
         <div>
           <div>You are logged in as {user.name}</div>
           <form onSubmit={handleLogout}>
             <button type='submit'>Log Out</button>
           </form>
         </div>
-        )
-      }
-
+      )
+    }
   }
 
 
 
-      return (
-        <div>
-        <h1>Blogs</h1>
-        <Notification message={notification}/>
-        {/*  <div>{user.name} logged in</div> */}
-        {loginForm()}
-        <br></br>
-        <Togglable buttonLabel='Add new blog'>
+  return (
+    <div>
+      <h1>Blogs</h1>
+      <Notification message={notification}/>
+      {loginForm()}
+      <br></br>
+      <Togglable buttonLabel='Add new blog'>
         <BlogForm newBlog={newBlog}/>
-        </Togglable>
-        <h2>Hot Blogs</h2>
-        {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} user={user} removeBlog={removeBlog}/>
-        )}
-      </div>
-      )
-    
-  
+      </Togglable>
+      <h2>Hot Blogs</h2>
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} user={user} removeBlog={removeBlog}/>
+      )}
+    </div>
+  )
+
 }
 
 export default App

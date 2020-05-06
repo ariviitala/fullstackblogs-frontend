@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 
 const Blog = ({ blog, likeBlog, user, removeBlog }) => {
   const [showInfo, setShowInfo] = useState(false)
-  
+
   const toggleShow = (event) => {
     event.preventDefault()
     setShowInfo(!showInfo)
@@ -26,11 +26,10 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
   const removeHandler = (event) => {
     event.preventDefault()
     const result = window.confirm(`Remove ${blog.title} ${blog.author}?`)
-    
+
     if (result){
       removeBlog(blog)
     }
-    
   }
 
   const removeButton = () => {
@@ -50,7 +49,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
           <div>{blog.url}</div>
           <div>
             <form onSubmit={likeHandler}>
-              likes {blog.likes} 
+              likes {blog.likes}
               <button type='submit'>like</button>
             </form>
           </div>
@@ -58,7 +57,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
           {removeButton()}
         </div>
       )
-    
+
     } else {
       return ''
     }
@@ -66,7 +65,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
   return (
     <div>
       <form onSubmit={toggleShow}>
-        {blog.title} {blog.author} 
+        {blog.title} {blog.author}
         <button type='submit'>{buttonText()}</button>
       </form>
       {infoBox()}

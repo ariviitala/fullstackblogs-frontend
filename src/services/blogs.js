@@ -9,15 +9,15 @@ const getAll = () => {
 const postNewBlog = async (newBlog, user) => {
   //console.log(token)
   const config = {
-    headers: { 'Authorization': `bearer ${user.token}`}, 
+    headers: { 'Authorization': `bearer ${user.token}` },
   }
 
   const request = await axios.post(baseUrl, newBlog, config)
-  return request.data  
+  return request.data
 }
 
 const likeBlog = async (blog) => {
-  const response = await axios.put(`${baseUrl}${blog.id}`, {likes: blog.likes + 1})
+  const response = await axios.put(`${baseUrl}${blog.id}`, { likes: blog.likes + 1 })
   console.log(response.data)
   return response.data
 }
@@ -25,11 +25,11 @@ const likeBlog = async (blog) => {
 const removeBlog = async (blog, user) => {
 
   const config = {
-    headers: { 'Authorization': `bearer ${user.token}`}, 
+    headers: { 'Authorization': `bearer ${user.token}` },
   }
 
   const response = await axios.delete(`${baseUrl}${blog.id}`, config)
   console.log(response.data)
 }
 
-export default { getAll, postNewBlog, likeBlog, removeBlog}
+export default { getAll, postNewBlog, likeBlog, removeBlog }
