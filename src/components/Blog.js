@@ -4,6 +4,14 @@ import React, { useState } from 'react'
 const Blog = ({ blog, likeBlog, user, removeBlog }) => {
   const [showInfo, setShowInfo] = useState(false)
 
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
+
   const toggleShow = (event) => {
     event.preventDefault()
     setShowInfo(!showInfo)
@@ -19,7 +27,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
 
   const likeHandler = (event) => {
     event.preventDefault()
-    console.log('Liked')
+    //console.log('Liked')
     likeBlog(blog)
   }
 
@@ -33,8 +41,8 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
   }
 
   const removeButton = () => {
-    console.log(user)
-    console.log(blog)
+    //console.log(user)
+    //console.log(blog)
     if(user && (user.username === blog.user.username)){
       return (<form onSubmit={removeHandler}><button type='submit'>Remove</button></form>)
     } else {
@@ -48,7 +56,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
         <div>
           <div>{blog.url}</div>
           <div>
-            <form onSubmit={likeHandler}>
+            <form onSubmit={likeHandler} className='likeForm'>
               likes {blog.likes}
               <button type='submit'>like</button>
             </form>
@@ -63,7 +71,7 @@ const Blog = ({ blog, likeBlog, user, removeBlog }) => {
     }
   }
   return (
-    <div>
+    <div style={blogStyle} className='blog'>
       <form onSubmit={toggleShow}>
         {blog.title} {blog.author}
         <button type='submit'>{buttonText()}</button>

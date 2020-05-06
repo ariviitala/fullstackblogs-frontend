@@ -24,10 +24,14 @@ const BlogForm = (props) => {
   return (
     <div>
       <h2>Insert new blog</h2>
-      <form onSubmit={handleNewBlog}>
-        <div>Title:<input value={newBlogTitle} onChange={({ target }) => setNewBlogTitle(target.value)}/></div>
-        <div>Author:<input value={newBlogAuthor} onChange={({ target }) => setNewBlogAuthor(target.value)}/></div>
-        <div>Url:<input value={newBlogUrl} onChange={({ target }) => setNewBlogUrl(target.value)}/></div>          <div><button type='submit'>Create</button></div>
+      <form id='form' onSubmit={handleNewBlog}>
+        <div>Title:<input id='title' value={newBlogTitle}
+          onChange={({ target }) => setNewBlogTitle(target.value)}/></div>
+        <div>Author:<input id='author' value={newBlogAuthor}
+          onChange={({ target }) => setNewBlogAuthor(target.value)}/></div>
+        <div>Url:<input id='url' value={newBlogUrl}
+          onChange={({ target }) => setNewBlogUrl(target.value)}/></div>
+        <div><button type='submit'>Create</button></div>
       </form>
     </div>
   )
