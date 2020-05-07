@@ -66,6 +66,7 @@ const App = () => {
   const newBlog = async (blog) => {
     try {
       const addedBlog = await blogService.postNewBlog(blog, user)
+      console.log(addedBlog)
       setBlogs(blogs.concat(addedBlog))
       displayMessage('success', `Added blog ${blog.title} by ${blog.author}`)
     } catch(error) {
@@ -125,9 +126,11 @@ const App = () => {
         <BlogForm newBlog={newBlog}/>
       </Togglable>
       <h2>Hot Blogs</h2>
-      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} user={user} removeBlog={removeBlog}/>
-      )}
+      <div id='blogs'>
+        {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} user={user} removeBlog={removeBlog}/>
+        )}
+      </div>
     </div>
   )
 
